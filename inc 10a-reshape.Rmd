@@ -1,0 +1,62 @@
+---
+title: "inc 10a-reshape"
+output: html_document
+date: "2023-11-28"
+---
+
+```{r}
+library(tidyverse)
+library(dplyr)
+gdp <- read_delim("/Users/zzy/Desktop/oecd-gdp.csv.bz2")
+gdp
+```
+
+
+```{r}
+gdplong <- 
+  gdp %>% 
+  pivot_longer(!c(country,indicator), 
+               names_to="year",
+               values_to = "gdp") %>% 
+  mutate(year=as.numeric(year))
+
+gdplong %>% 
+  head(10)
+```
+
+```{r}
+p <- data.frame(pregnant=c("Yes","No"),
+                male=c(NA,25),
+                female=c(11,18))
+p
+```
+
+```{r}
+pl <- p %>% 
+  pivot_longer(c(male,female))
+pl
+```
+
+```{r}
+
+pl <- p %>% 
+  pivot_longer(c(male,female),
+               names_to="sex",
+               values_to="count")
+pl
+```
+
+
+```{r}
+pl %>% 
+  pivot_wider(id_cols=pregnant,
+              names_from=sex,
+              values_from=count)
+
+```
+
+```{r}
+
+
+```
+
